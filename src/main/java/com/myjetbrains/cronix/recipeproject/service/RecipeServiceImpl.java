@@ -2,9 +2,11 @@ package com.myjetbrains.cronix.recipeproject.service;
 
 import com.myjetbrains.cronix.recipeproject.model.Recipe;
 import com.myjetbrains.cronix.recipeproject.repository.RecipeRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
+@Service
 
 public class RecipeServiceImpl implements RecipeService {
 

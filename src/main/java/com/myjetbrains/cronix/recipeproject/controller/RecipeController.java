@@ -1,25 +1,24 @@
 package com.myjetbrains.cronix.recipeproject.controller;
 
 import com.myjetbrains.cronix.recipeproject.service.RecipeService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@Slf4j
-public class IndexController {
+public class RecipeController {
 
     private final RecipeService recipeService;
 
-    public IndexController(RecipeService recipeService) {
+    public RecipeController(RecipeService recipeService) {
         this.recipeService = recipeService;
     }
 
-    @RequestMapping({"/", "", "/index", "/index.html"})
-    public String getIndexPage(Model model) {
-        log.debug("Getting index page");
-        model.addAttribute("recipes", recipeService.getRecipes());
-        return "index";
+    @RequestMapping("/recipe/show/{id}")
+    public String showById(@PathVariable String id, Model model) {
+
+        model.addAttribute("recipe", recipeService.finById(new Long(id)));
+        return "recipe/show";
     }
 }

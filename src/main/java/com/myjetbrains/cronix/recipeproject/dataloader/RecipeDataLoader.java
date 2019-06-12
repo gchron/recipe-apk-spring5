@@ -1,17 +1,25 @@
 package com.myjetbrains.cronix.recipeproject.dataloader;
 
-import com.myjetbrains.cronix.recipeproject.model.*;
+import com.myjetbrains.cronix.recipeproject.model.Category;
+import com.myjetbrains.cronix.recipeproject.model.Difficulty;
+import com.myjetbrains.cronix.recipeproject.model.Ingredient;
+import com.myjetbrains.cronix.recipeproject.model.Notes;
+import com.myjetbrains.cronix.recipeproject.model.Recipe;
+import com.myjetbrains.cronix.recipeproject.model.UnitOfMeasure;
 import com.myjetbrains.cronix.recipeproject.repository.CategoryRepository;
 import com.myjetbrains.cronix.recipeproject.repository.RecipeRepository;
 import com.myjetbrains.cronix.recipeproject.repository.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+@Slf4j
 
 @Component
 public class RecipeDataLoader implements ApplicationListener<ContextRefreshedEvent> {
@@ -27,8 +35,11 @@ public class RecipeDataLoader implements ApplicationListener<ContextRefreshedEve
     }
 
     @Override
+    @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
         recipeRepository.saveAll(getRecipes());
+        log.debug("Loading data");
+
     }
 
     private List<Recipe> getRecipes() {
